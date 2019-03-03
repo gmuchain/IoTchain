@@ -12,9 +12,10 @@
 namespace IotChain {
 class Log {
 public:
-
     Log(const std::string filename = "CryptoKernel.log", const bool printToConsole = false);
     ~Log();
+    bool printf(const int loglevel, const std::string message);
+
 };
 
 }
