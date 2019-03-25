@@ -1,0 +1,25 @@
+bootstrap compilation instructions
+    1. g++ bootstrap.cpp -o bootstrap
+    2. ./bootstrap
+
+client compilation instructions
+    1. g++ client.cpp -o client
+    2. ./client -p 5555 -s 127.0.0.1
+
+    The client application takes 2 arguments, the port and host of the server to connect to. These values are currently
+    set to 5555 and 127.0.0.1 (localhost) respectively, but the server port can be changed. Client executables can be ran once
+    the bootstrap server is running. The server will await for a connection and request a host IP input from the client. 
+    This functionality only here to show the multi-thread capability and any value can be entered. Once a host name is 
+    sent, the client reads the json file "peers.json" and sends the buffered string to the server. The server receives the 
+    string and currently writes it to "known_peers.json". The server must be able to parse the string and update a host's
+    known peers and resemble the structure below. In this case, 127.0.0.1 represents the client's hostname. The json.hpp file is
+    a compiled header file from a downloaded distrubution of jsoncpp. Follow https://github.com/open-source-parsers/jsoncpp for
+    more info on jsoncpp.
+
+    {
+        "127.0.0.1":[
+            {"host":"127.0.0.2","port":"8080"},
+            {"host":"127.0.0.3","port":"8081"},
+            {"host":"127.0.0.4","port":"8082"},
+            {"host":"127.0.0.5","port":"8083"}]
+    }
