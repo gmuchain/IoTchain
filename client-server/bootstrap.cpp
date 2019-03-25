@@ -1,14 +1,13 @@
 #include "bootstrap.h"
-
 using namespace std;
-//using json = nlohmann::json;
+
 int main(){
  
     int server, client;
     pthread_t new_thread;
     struct  sockaddr_in serverAddr, clientAddr;
     socklen_t clientAddrSize;
-     pthread_t thread_id;
+    pthread_t thread_id;
 
     server = socket(AF_INET, SOCK_STREAM, 0);
     
@@ -24,15 +23,12 @@ int main(){
     clientAddrSize = sizeof(clientAddr);
 
     while(1){
-        
         if((client = accept(server, (struct sockaddr *)&clientAddr, (socklen_t*)&clientAddrSize)) > 0){
             
-
-            if( pthread_create( &thread_id , NULL ,  connection_handler , (void*) &client) < 0)
-        {
-            perror("could not create thread");
-            return 1;
-        }
+            if( pthread_create( &thread_id , NULL ,  connection_handler , (void*) &client) < 0){
+                perror("could not create thread");
+                return 1;
+            }
         }
     }
 }

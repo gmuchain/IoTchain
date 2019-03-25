@@ -1,5 +1,5 @@
 #include <iostream>
-//#include <winsock2.h>
+//#include <winsock2.h>  //windows socket header
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -16,14 +16,7 @@ const char* HOST_IP = "Host IP";
 const char* HOST_PEERS = "Host Peers";
 const char* END = "End Connection";
 
-const char* CLIENT_REQUEST = "New Client";
-
-const char* YES = "y";
-
-const char* NO = "n";
-const int SERVER_COMM = 0;
-const int CLIENT_COMM = 1;
-
+//const char* CLIENT_REQUEST = "New Client";
 
 int sendBuffer (int ClientSocket, const char *buf, int len);
 

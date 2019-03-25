@@ -1,9 +1,8 @@
 #include <iostream>
-//#include <winsock2.h>
+//#include <winsock2.h>  //windows socket header
 #include <sys/socket.h>  
 #include <netinet/in.h>
 #include <unistd.h>
-
 #include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros  
 #include <inttypes.h>
 #include <cstdint>

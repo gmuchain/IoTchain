@@ -1,8 +1,6 @@
 #include "client.h"
-
 using namespace std;
  
-//using json = nlohmann::json;
 int main(int argc, char *argv[]){
     int server;
     struct  sockaddr_in addr;
@@ -30,7 +28,9 @@ int main(int argc, char *argv[]){
             cout << "Socket closed." << endl << endl;
             return 1;
     }
+
     sendBuffer(server,REQUEST,strlen(REQUEST));
+
     while(1){
         if(recv(server, buffer, sizeof(buffer), 0) <0){
             cout << "Cannot connect to server" << endl;
@@ -40,6 +40,7 @@ int main(int argc, char *argv[]){
         }
     
         cout << "Server says: " << buffer << endl;
+        
         if(strcmp(buffer,HOST_IP) == 0){
             cout  << "Request Accepted" << endl;
             cout << "Please input host name: ";
@@ -65,7 +66,6 @@ int main(int argc, char *argv[]){
             break;
             
         }
-
         memset(buffer, 0, sizeof(buffer));
     }
 }
@@ -77,10 +77,9 @@ int sendBuffer (int client_socket, const char *buf, int len){
     const char *cp = buf;
 
     while (num_left > 0){
-
         num_sent = send(client_socket, cp, num_left,0);
         if (num_sent < 0){
-             cout << err << endl;
+            cout << err << endl;
             break;
         }
 
