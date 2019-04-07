@@ -9,7 +9,7 @@ client compilation instructions
     The client application takes 2 arguments, the port and host of the server to connect to. These values are currently
     set to 5555 and 127.0.0.1 (localhost) respectively, but the server port can be changed. Client executables can be ran once
     the bootstrap server is running. The server will await for a connection and request a host IP input from the client. 
-    This functionality only here to show the multi-thread capability and any value can be entered. Once a host name is 
+    This functionality only here to show the multi-thread capability and will not be there in the future. Once a host name is 
     sent, the client reads the json file "peers.json" and sends the buffered string to the server. The server receives the 
     string and currently writes it to "known_peers.json". The server must be able to parse the string and update a host's
     known peers and resemble the structure below. In this case, 127.0.0.1 represents the client's hostname. The json.hpp file is

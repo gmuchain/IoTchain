@@ -1,10 +1,8 @@
 #include "bootstrap.h"
-using namespace std;
-
+ 
 int main(){
  
     int server, client;
-    pthread_t new_thread;
     struct  sockaddr_in serverAddr, clientAddr;
     socklen_t clientAddrSize;
     pthread_t thread_id;
@@ -23,8 +21,8 @@ int main(){
     clientAddrSize = sizeof(clientAddr);
 
     while(1){
+        
         if((client = accept(server, (struct sockaddr *)&clientAddr, (socklen_t*)&clientAddrSize)) > 0){
-            
             if( pthread_create( &thread_id , NULL ,  connection_handler , (void*) &client) < 0){
                 perror("could not create thread");
                 return 1;
@@ -40,10 +38,11 @@ int main(){
     3. Read peers from client and store in known_peers.json
  */
 void *connection_handler(void *socket_desc){
-    string host = "";
-    string peers = "";
+    std::string host = "";
+    std::string peers = "";
     int client_socket =  *((int *)socket_desc);
     char buffer[1024];
+    json peerJson;
 
     cout  << "Client connected!" << endl;
     while(1){
@@ -52,25 +51,38 @@ void *connection_handler(void *socket_desc){
 
         if(strcmp(buffer,REQUEST) == 0){
             cout  << "Server: Received Initial Request" << endl;
-            cout  << "Server: Ready for Host IP" << endl;
+            cout  << "Server: Request Host IP" << endl;
             send(client_socket, HOST_IP, strlen(HOST_IP), 0);
             
         }
         else{
             if(host.length() == 0){
-                cout << "set host" << endl;
-                host = buffer;
+                cout << "Server: Received Host IP " << buffer << endl;
+                host = buffer;                
+                cout << "Server: Request Peers " << endl;
                 send(client_socket, HOST_PEERS, strlen(HOST_PEERS), 0);
 
             }
             else{
-                cout << "create known_peers" << endl;
+                
+                peerJson = parseClientPeers(buffer,host);
+                peers = peerJson.dump();
+                cout << "Server: Peers sent to client " << endl;
+                cout << peerJson.dump(1) << endl;
+                std::vector<char> bytes(peers.begin(), peers.end());
+                bytes.push_back('\0');
+                /*
                 ofstream file("known_peers.json");
                 if (file.is_open()){
                     file << buffer;
+                    parseClientPeers(buffer,host);
                     file.close();
                 }
-                send(client_socket, END, strlen(END), 0);
+                */
+               
+
+                sendBuffer(client_socket,bytes.data(),bytes.size());               
+                //send(client_socket, END, strlen(END), 0);
                 
                 pthread_exit(NULL); 
                 close(client_socket);
@@ -80,4 +92,70 @@ void *connection_handler(void *socket_desc){
         }
         memset(buffer, 0, strlen(buffer));
     }
+}   
+
+
+/*
+    Parse received peers from buffer. Needs to update known peers
+    for given host.
+*/
+json parseClientPeers(char *buffer,std::string host){
+    json peers = findHostsPeers(host);
+
+    /*
+    json j = json::parse((char*)buffer, ((char*)buffer) + strlen((char*)buffer));
+    for (auto& element : peers) {
+        for(auto& element2: element){
+            std::cout << element2["host"] << ":" << element2["port"] << '\n';
+        }
+    }*/
+    return peers;
+}
+
+/*
+    If the connecting host is found, update its known peers.
+*/
+json findHostsPeers(std::string host){
+    std::ifstream i("known_peers.json");
+    json j, peers,peer,client;
+    i >> j;
+    peers = json::array();
+    // even easier with structured bindings (C++17)
+    for (auto& el : j.items() ){
+        if(strcmp(el.key().c_str(),host.c_str()) == 0){
+            std::cout  << "Found host!" << endl;
+            std::cout << "Peers on server: " << endl;
+            for(auto& el2: el.value()){
+                std::cout << el2["host"] << ":" << el2["port"] << '\n';
+                peer["host"] = el2["host"];
+                peer["port"] = el2["port"];
+                peers.push_back(peer);
+            }
+        }
+    }
+    client["peers"] = peers;
+    return client;   
+}
+/*
+    Continues to send data until no data is left.
+
+*/
+int sendBuffer (int client_socket, const char *buf, int len){
+    int num_left = len;
+    int num_sent;
+    int err = 0;
+    const char *cp = buf;
+
+    while (num_left > 0){
+
+        num_sent = send(client_socket, cp, num_left,0);
+        if (num_sent < 0){
+             cout << err << endl;
+            break;
+        }
+
+        num_left -= num_sent;
+        cp += num_sent;
+    }
+    return num_sent;
 }
