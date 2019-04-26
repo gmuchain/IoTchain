@@ -1,0 +1,28 @@
+[
+    {
+        "block_header": {
+            "nonce": 0,
+            "previous_hash": "string",
+            "timestamp": 0,
+            "num_trans": 0,
+            "height": 0,
+            "block_hash": "string",
+            "difficulty": 0,
+            "next_hash": "string",
+            "reward": 0,
+            "size": 0
+        },
+        "transactions": [
+            {
+                "input_addresses": [
+                    "string"
+                ],
+                "fees": 0,
+                "output_addresses": [
+                    "string"
+                ],
+                "size": 0
+            }
+        ]
+    }
+]

@@ -1,0 +1,38 @@
+<div class="widgets">
+    <div class="row">
+        <div class="col-md-12">
+            <div ba-panel ba-panel-title="" ba-panel-class="with-scroll">
+                <div class="horizontal-scroll">
+                    <table class="table" st-table="blocks" >
+                        <thead>
+                        <tr>
+                            <th class="table-id">Block Height</th>
+                            <th>Timestamp</th>
+                            <th>Hash</th>
+                            <th>Block Size</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="block in Blocks">
+                            <td class="table-id">{{block.block_header.height}}</td>
+                            <td>{{block.block_header.timestamp  * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+                            <!--<td ng-click="openBlockDetails(item.hash)"><a href="#/posts/{{$index}}">{{item.hash}}</a></td>-->
+                            <td><a ng-click="setParams(block)" href="#/blocks-table/{{block.block_header.block_hash}}">{{block.block_header.block_hash}}</a></td>
+                            <td>{{block.block_header.size}}</td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    <div st-pagination="" st-items-by-page="BlocksPageSize" st-displayed-pages="5"></div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</div>
+

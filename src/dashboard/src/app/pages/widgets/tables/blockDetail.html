@@ -1,0 +1,45 @@
+<div class="horizontal-scroll">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="table-id">Block {{block.block_header.height}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="table-col-header">Block Height</td>
+        <td class="table-col-detail">{{block.block_header.height}}</td>
+        <td class="table-col-header">Number of Transactions</td>
+        <td class="table-col-detail">{{block.block_header.num_trans}}</td>
+      </tr>
+      <tr>
+            <td class="table-col-header">Timestamp</td>
+            <td class="table-col-detail">{{block.block_header.timestamp  * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+            <td class="table-col-header">Difficulty</td>
+            <td class="table-col-detail">{{block.block_header.difficulty}}</td>
+      </tr>
+
+      <tr>
+        <td class="table-col-header">Block Size</td>
+        <td class="table-col-detail">{{block.block_header.size}}</td>
+        <td class="table-col-header">Nonce</td>
+        <td class="table-col-detail">{{block.block_header.nonce}}</td>
+      </tr>
+      <tr>
+        <td class="table-col-header">Reward</td>
+        <td class="table-col-detail">{{block.block_header.reward}}</td>
+      </tr>
+      <tr>
+        
+        <td class="table-col-header">Block Hash</td>
+        <td class="table-col-detail"><a ng-click="setParams(block)" href="#/blocks-table/{{block.block_header.block_hash}}">{{block.block_header.block_hash}}</a></td>
+        <td class="table-col-header">Previous Hash</td>
+        <td class="table-col-detail"><a ng-click="setParams(block)" href="#/blocks-table/{{block.block_header.previous_hash}}">{{block.block_header.previous_hash}}</a></td>
+      </tr>
+      <tr>
+        <td class="table-col-header">Next Hash</td>
+        <td class="table-col-detail"><a ng-click="setParams(block)" href="#/blocks-table/{{block.block_header.next_hash}}">{{block.block_header.next_hash}}</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>

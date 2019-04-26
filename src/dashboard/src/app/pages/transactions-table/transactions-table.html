@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-12">
+    <div ba-panel ba-panel-title="" ba-panel-class="with-scroll">
+      <!--<div include-with-scope="app/pages/widgets/tables/transactionsTable.html"></div>-->
+      <div class="horizontal-scroll">
+          <table class="table table-striped" st-table="transaction.data">
+            <thead>
+            <tr>
+              <th class="tx_hash">Tx Hash</th>
+              <th>Fees</th>
+              <th>Data</th>
+              <th>Size (KB)</th>
+            </tr>
+            </thead>
+            
+            <tbody>
+            <tr ng-repeat="transaction in Transactions track by transaction.data">
+              <td class="tx_hash" ng-click="setParams(transaction)"><a href="#/transactions-table/{{transaction.txHash}}">{{transaction.txHash}}</a></td>
+              <td>{{transaction.fees}}</td>
+              <td>{{transaction.data}}</td>
+              <td>{{transaction.size}}</td>
+            </tr>
+            </tbody>
+                
+            <tfoot>
+              <tr>
+                <td colspan="6" class="text-center">
+                  <div st-pagination="" st-items-by-page="transactionsPageSize" st-displayed-pages="5"></div>
+                </td>
+              </tr>
+              </tfoot>
+          </table>  
+        </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="horizontal-scroll" style="width:50%">
+        <table class="table table-striped">
+            <thead>
+                    <tr>
+                        <th class="table-id">Inputs</th>
+                    </tr>
+            </thead>
+          <tbody>
+              <tr>
+                    <td>Address</td>
+                    <td>Amount</td>
+              </tr>
+              
+              <tr ng-repeat="input in transaction.input_addresses">
+                    <td>{{input.address}}</td>
+                    <td>{{input.amount}}</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="horizontal-scroll" style="width:50%">
+        <table class="table table-striped" >
+
+                <thead>
+                        <tr>
+                            <th class="table-id">Outputs</th>
+                        </tr>
+                </thead>
+              <tbody>
+                  <tr>
+                        <td>Address</td>
+                        <td>Amount</td>
+                  </tr>
+                    <tr ng-repeat="output in transaction.output_addresses">
+                            <td>{{output.address}}</td>
+                            <td>{{output.amount}}</td>
+                    </tr>
+                    
+                </tbody>
+              </table>
+      </div>
